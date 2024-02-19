@@ -6,6 +6,7 @@ function Home() {
         <br />
         Straight out of the oven, straight to you.
       </h1>
+      <p>some text</p>
     </div>
   );
 }
