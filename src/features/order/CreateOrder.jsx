@@ -1,7 +1,11 @@
 // https://uibakery.io/regex-library/phone-number
 
-import { Form, redirect, useActionData, useNavigate } from 'react-router-dom';
-import { createOrder } from '../../services/apiRestaurant';
+import {
+  Form,
+  /*redirect,*/ useActionData,
+  useNavigate,
+} from 'react-router-dom';
+//import { createOrder } from '../../services/apiRestaurant';
 
 const isValidPhone = (str) =>
   /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(
@@ -48,13 +52,13 @@ function CreateOrder() {
       <Form method="POST">
         <div>
           <label>First Name</label>
-          <input type="text" name="customer" required />
+          <input type="text" name="customer" required className="input" />
         </div>
 
         <div>
           <label>Phone number</label>
           <div>
-            <input type="tel" name="phone" required />
+            <input type="tel" name="phone" required className="input" />
           </div>
           {formErrors?.phone && <p>{formErrors.phone}</p>}
         </div>
@@ -62,7 +66,7 @@ function CreateOrder() {
         <div>
           <label>Address</label>
           <div>
-            <input type="text" name="address" required />
+            <input type="text" name="address" required className="input" />
           </div>
         </div>
 
@@ -71,6 +75,8 @@ function CreateOrder() {
             type="checkbox"
             name="priority"
             id="priority"
+            className="focus:right-offset-2 h-6 w-6 accent-yellow-400
+             focus:outline-none focus:ring focus:ring-yellow-400 focus:ring-offset-2"
             // value={withPriority}
             // onChange={(e) => setWithPriority(e.target.checked)}
           />
@@ -79,7 +85,14 @@ function CreateOrder() {
 
         <div>
           <input type="hidden" name="cart" value={JSON.stringify(cart)} />
-          <button disabled={isSubmitting}>
+          <button
+            disabled={isSubmitting}
+            className="inline-block rounded-full bg-yellow-400 px-4 py-3 font-semibold uppercase tracking-wide
+             text-stone-800 transition-colors duration-300
+              hover:bg-yellow-300 focus:bg-yellow-300
+               focus:outline-none focus:ring focus:ring-yellow-300 
+               focus:ring-offset-2 disabled:cursor-not-allowed"
+          >
             {isSubmitting ? 'Placing order ...' : 'Order now'}
           </button>
         </div>
@@ -92,7 +105,7 @@ function CreateOrder() {
 export async function action({ request }) {
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
-  console.log(data);
+  //console.log(data);
   // we create a new data
   const order = {
     ...data,
@@ -106,8 +119,9 @@ export async function action({ request }) {
   if (Object.keys(errors).length > 0) return errors;
 
   //if everything is okey, create new order and redirect
-  const newOrder = await createOrder(order);
-  return redirect(`/order/${newOrder.id}`);
+  // const newOrder = await createOrder(order);
+  // return redirect(`/order/${newOrder.id}`);
+  return null;
 }
 
 export default CreateOrder;
