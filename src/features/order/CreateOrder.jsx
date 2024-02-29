@@ -66,9 +66,9 @@ function CreateOrder() {
           </div>
         </div>
 
-        <div className="relative mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
+        <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
           <label className="sm:basis-40">Address</label>
-          <div className="grow">
+          <div className=" relative grow">
             <input
               type="text"
               name="address"
@@ -82,22 +82,23 @@ function CreateOrder() {
                 {errorAddress}
               </p>
             )}
+            {!position.latitude && !position.longitude && (
+              <span className="absolute right-[15px] top-[50%] z-50 -translate-y-1/2">
+                <Button
+                  disabled={isLoadingAddress}
+                  type="small"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    dispatch(fetchAddress());
+                  }}
+                >
+                  Get Posit
+                </Button>
+              </span>
+            )}
           </div>
         </div>
-        {!position.latitude && !position.longitude && (
-          <span className="absolute right-[14px] z-50">
-            <Button
-              disabled={isLoadingAddress}
-              type="small"
-              onClick={(e) => {
-                e.preventDefault();
-                dispatch(fetchAddress());
-              }}
-            >
-              Get Posit
-            </Button>
-          </span>
-        )}
+
         <div className="mb-12 flex items-center gap-5">
           <input
             type="checkbox"
